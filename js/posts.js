@@ -4,6 +4,10 @@ import { setupFeedHeaderAuth } from "./header.js";
 import { displayMessage } from "./ui.js";
 
 const createPostSection = document.querySelector("#createPostSection");
+const createPostContent = document.querySelector("#createPostContent");
+const toggleCreatePostButton = document.querySelector(
+  "#toggleCreatePostButton",
+);
 const postForm = document.querySelector("form");
 let currentUser = null;
 
@@ -46,6 +50,13 @@ postForm.addEventListener("submit", async function (e) {
   } finally {
     fieldset.disabled = false;
   }
+});
+
+toggleCreatePostButton?.addEventListener("click", function () {
+  // just because i had time c:
+  const isCollapsed =
+    !createPostContent || createPostContent.classList.contains("hidden");
+  setCreatePostCollapsed(!isCollapsed);
 });
 
 async function loadPosts() {
@@ -103,9 +114,25 @@ async function initFeedPage() {
 
   if (currentUser) {
     createPostSection.classList.remove("hidden");
+    setCreatePostCollapsed(true);
   } else {
     createPostSection.classList.add("hidden");
   }
 
   await loadPosts();
+}
+
+function setCreatePostCollapsed(isCollapsed) {
+  if (!createPostContent || !toggleCreatePostButton) {
+    return;
+  }
+
+  if (isCollapsed) {
+    createPostContent.classList.add("hidden");
+    toggleCreatePostButton.textContent = "Expand";
+    return;
+  }
+
+  createPostContent.classList.remove("hidden");
+  toggleCreatePostButton.textContent = "Collapse";
 }

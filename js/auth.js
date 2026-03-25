@@ -5,8 +5,6 @@ export async function getCurrentUser() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("currentUser", user);
-
   return user ?? null;
 }
 
