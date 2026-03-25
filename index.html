@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ratatosk - News Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --color-darkest: #091413;
+        --color-dark: #285a48;
+        --color-medium: #408a71;
+        --color-light: #b0e4cc;
+        --color-contrast: #e38d37;
+      }
+
+      body {
+        background:
+          radial-gradient(
+            circle at 12% 20%,
+            var(--color-medium) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            var(--color-dark) 0%,
+            transparent 45%
+          ),
+          var(--color-darkest);
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center p-6">
+    <main class="w-full max-w-2xl text-center text-white">
+      <img
+        src="ratatosk_logo.svg"
+        alt="Ratatosk logo"
+        class="mx-auto mb-4 w-32 h-32"
+      />
+
+      <h1 class="mb-2 text-5xl font-bold">Ratatosk</h1>
+
+      <p class="mb-8 text-lg" style="color: var(--color-light)">
+        Tagline when I know what I'm doing
+      </p>
+
+      <div class="flex flex-col items-center gap-3">
+        <a
+          href="feed.html"
+          class="w-full rounded-full px-8 py-3 font-semibold transition-all duration-200 hover:scale-105 hover:opacity-90 active:scale-98"
+          style="
+            background-color: var(--color-contrast);
+            color: var(--color-darkest);
+          "
+        >
+          Explore
+        </a>
+
+        <div class="flex gap-2 w-full">
+          <a
+            href="login.html"
+            class="flex-1 rounded-full px-6 py-3 font-semibold transition-all duration-200 hover:scale-105 active:scale-98"
+            style="
+              background-color: var(--color-contrast);
+              color: var(--color-darkest);
+            "
+          >
+            Login
+          </a>
+
+          <a
+            href="register.html"
+            class="flex-1 rounded-full px-6 py-3 font-semibold transition-all duration-200 hover:scale-105 active:scale-98"
+            style="
+              background-color: var(--color-contrast);
+              color: var(--color-darkest);
+            "
+          >
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

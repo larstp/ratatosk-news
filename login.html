@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Ratatosk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --color-darkest: #091413;
+        --color-dark: #285a48;
+        --color-medium: #408a71;
+        --color-light: #b0e4cc;
+      }
+
+      body {
+        background:
+          radial-gradient(
+            circle at 12% 20%,
+            var(--color-medium) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            var(--color-dark) 0%,
+            transparent 45%
+          ),
+          var(--color-darkest);
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center p-5">
+    <section
+      class="w-full max-w-sm rounded-lg p-6 text-white"
+      style="
+        background-color: var(--color-dark);
+        border: 1px solid var(--color-medium);
+      "
+    >
+      <h1 class="mb-2 text-2xl font-bold">Login</h1>
+      <p class="mb-6 text-sm" style="color: var(--color-light)">
+        Sign in to your Ratatosk account.
+      </p>
+
+      <form id="loginForm" class="mb-6 flex flex-col gap-3">
+        <fieldset id="formFieldset">
+          <label class="flex flex-col gap-1">
+            <span class="text-sm font-medium">Email</span>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="user@stud.noroff.no"
+              required
+              autocomplete="email"
+              class="rounded border border-gray-500 bg-gray-900 px-3 py-2 text-white placeholder-gray-500 focus:outline-none"
+            />
+          </label>
+
+          <label class="mt-3 flex flex-col gap-1">
+            <span class="text-sm font-medium">Password</span>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+              class="rounded border border-gray-500 bg-gray-900 px-3 py-2 text-white placeholder-gray-500 focus:outline-none"
+            />
+          </label>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="mt-4 rounded-full px-6 py-2 font-semibold transition-all duration-200"
+            style="background-color: #e9f2ff; color: #091122"
+          >
+            Login
+          </button>
+        </fieldset>
+      </form>
+
+      <div
+        id="errorMessage"
+        class="mb-4 hidden rounded p-3"
+        style="background-color: rgba(255, 180, 180, 0.2); color: #ffb4b4"
+      ></div>
+
+      <div
+        id="successMessage"
+        class="mb-4 hidden rounded p-3"
+        style="
+          background-color: rgba(176, 228, 204, 0.2);
+          color: var(--color-light);
+        "
+      ></div>
+
+      <p class="mb-3 text-sm">
+        No account yet?
+        <a href="register.html" class="text-blue-400 hover:underline"
+          >Create one</a
+        >
+      </p>
+      <p class="text-sm">
+        <a href="index.html" class="text-blue-400 hover:underline"
+          >Back to landing</a
+        >
+      </p>
+    </section>
+
+    <script src="login.js" type="module"></script>
+  </body>
+</html>
