@@ -9,9 +9,14 @@ const toggleCreatePostButton = document.querySelector(
   "#toggleCreatePostButton",
 );
 const postForm = document.querySelector("form");
+const postsContainer = document.querySelector("#postsContainer");
 let currentUser = null;
 
 initFeedPage();
+
+if (!postForm) {
+  throw new Error("Post form was not found on the page.");
+}
 
 postForm.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -30,6 +35,14 @@ postForm.addEventListener("submit", async function (e) {
   const content = form.content.value.trim();
   const fieldset = form.querySelector("fieldset");
 
+  if (!fieldset) {
+    displayMessage("#errorMessage", "error", "Form fieldset was not found.");
+    return;
+  }
+
+  displayMessage("#errorMessage", "error", "");
+  displayMessage("#successMessage", "success", "");
+
   try {
     fieldset.disabled = true;
 
@@ -45,7 +58,7 @@ postForm.addEventListener("submit", async function (e) {
 
     form.reset();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     displayMessage("#errorMessage", "error", error.toString());
   } finally {
     fieldset.disabled = false;
@@ -60,8 +73,12 @@ toggleCreatePostButton?.addEventListener("click", function () {
 });
 
 async function loadPosts() {
-  const postsContainer = document.querySelector("#postsContainer");
+  if (!postsContainer) {
+    return;
+  }
+
   postsContainer.innerHTML = "";
+  displayMessage("#postsContainer", "info", "Loading posts...");
 
   try {
     const { data: posts, error } = await supabase
@@ -75,6 +92,7 @@ async function loadPosts() {
     }
 
     if (!posts || posts.length === 0) {
+      postsContainer.innerHTML = "";
       displayMessage(
         "#postsContainer",
         "info",
@@ -83,11 +101,14 @@ async function loadPosts() {
       return;
     }
 
+    postsContainer.innerHTML = "";
+
     posts.forEach((post) => {
       const postElement = createPostElement(post);
       postsContainer.appendChild(postElement);
     });
   } catch (error) {
+    console.error(error);
     displayMessage("#errorMessage", "error", error.toString());
   }
 }
@@ -112,10 +133,10 @@ async function initFeedPage() {
   await setupFeedHeaderAuth();
   currentUser = await getCurrentUser();
 
-  if (currentUser) {
+  if (currentUser && createPostSection) {
     createPostSection.classList.remove("hidden");
     setCreatePostCollapsed(true);
-  } else {
+  } else if (createPostSection) {
     createPostSection.classList.add("hidden");
   }
 
