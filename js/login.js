@@ -27,7 +27,7 @@ loginForm.addEventListener("submit", async function (e) {
       return;
     }
 
-    displayMessage("#successMessage", "success", "Login successful.");
+    window.location.href = "feed.html";
   } catch (error) {
     console.log(error);
     displayMessage("#errorMessage", "error", error.toString());

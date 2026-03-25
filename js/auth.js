@@ -5,23 +5,56 @@ export async function getCurrentUser() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log("currentUser", user);
+
   return user ?? null;
 }
 
-export async function checkAuth(options = {}) {
-  const { redirectIfMissing = true } = options;
+export async function checkAuth() {
   const user = await getCurrentUser();
 
-  if (!user && redirectIfMissing) {
+  if (!user) {
     window.location.href = "login.html";
+    return null;
   }
 
-  console.log("user", user);
   return user;
 }
 
 export async function requireAuth() {
-  return checkAuth({ redirectIfMissing: true });
+  return checkAuth();
+}
+
+export async function hideIndexAuthActionsIfLoggedIn(
+  selector = "#authActions",
+  logoutSelector = "#logoutButton",
+) {
+  const user = await getCurrentUser();
+  const container = document.querySelector(selector);
+  const logoutButton = document.querySelector(logoutSelector);
+
+  if (user) {
+    if (container) {
+      container.classList.add("hidden");
+    }
+
+    if (logoutButton) {
+      logoutButton.classList.remove("hidden");
+      logoutButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        logout();
+      });
+    }
+    return;
+  }
+
+  if (container) {
+    container.classList.remove("hidden");
+  }
+
+  if (logoutButton) {
+    logoutButton.classList.add("hidden");
+  }
 }
 
 export async function logout() {
@@ -31,5 +64,5 @@ export async function logout() {
     console.error("Error logging out:", error);
   }
 
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }

@@ -44,6 +44,7 @@ registerForm.addEventListener("submit", async function (e) {
         "Registration successful! Please check your email to confirm your account.",
       );
       form.reset();
+      window.location.href = "login.html";
     }
   } catch (error) {
     console.log(error);
