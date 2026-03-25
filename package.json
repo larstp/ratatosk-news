@@ -1,0 +1,27 @@
+{
+  "name": "ratatosk-news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/output.css --minify",
+    "dev:css": "tailwindcss -i ./css/tailwind.css -o ./css/output.css --watch",
+    "watch": "tailwindcss -i ./css/tailwind.css -o ./css/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larstp/ratatosk-news.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/larstp/ratatosk-news/issues"
+  },
+  "homepage": "https://github.com/larstp/ratatosk-news#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  }
+}
