@@ -1,19 +1,24 @@
 # Ratatosk News
 
+### NOROFF - FED2 OCT24FT - DP - Course Assignment
+
 <p align="center">
-  <img src="./ratatosk_logo.svg" alt="Ratatosk logo" width="450" />
+  <img src="./ratatosk_logo.svg" alt="Ratatosk logo" width="250" />
 </p>
 
 Simple news platform built with HTML, CSS, JavaScript, and Supabase.
 
-View the live site at https://larstp.github.io/ratatosk-news.
+**View the live site at https://larstp.github.io/ratatosk-news.**
 
-## What this project does
+## What the project does
 
-- Register and log in users with Supabase Auth
-- Show a feed of posts
-- Let logged-in users create posts
-- Hide/show parts of the UI based on login state
+- Supabase manages all authentication and data persistence
+- New users sign up and receive a verification email to activate their account
+- Once verified, the user session is established and persists across pages
+- The app detects authentication state and displays relevant UI components (login form hides when authenticated, create form shows for members)
+- All posts load from the database as styled cards and refresh after create/delete actions
+
+NOTE: Rate limiting applies for registration emails (supabase rules). Please don't send more than 10 in a row.
 
 ## Tech used
 
@@ -60,3 +65,7 @@ npm run dev:css
 - `js/posts.js` - feed and post creation logic
 - `js/header.js` - feed header auth button logic
 - `js/ui.js` - message UI helper
+
+## Author
+
+Lars Torp Pettersen

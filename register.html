@@ -30,6 +30,12 @@
           var(--color-darkest);
         min-height: 100vh;
       }
+
+      #submitBtn:hover {
+        background-color: #d0e0ff !important;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(232, 157, 55, 0.3);
+      }
     </style>
   </head>
   <body class="flex items-center justify-center p-5">
@@ -53,7 +59,7 @@
               type="email"
               id="email"
               name="email"
-              placeholder="user@stud.noroff.no"
+              placeholder="example@email.com"
               required
               autocomplete="email"
               class="rounded border border-gray-500 bg-gray-900 px-3 py-2 text-white placeholder-gray-500 focus:outline-none"

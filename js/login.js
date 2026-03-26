@@ -32,6 +32,15 @@ loginForm.addEventListener("submit", async function (e) {
     });
 
     if (error) {
+      if (isEmailNotVerifiedError(error)) {
+        displayMessage(
+          "#errorMessage",
+          "warning",
+          "Please verify your email before signing in. Check your inbox for the confirmation link.",
+        );
+        return;
+      }
+
       displayMessage("#errorMessage", "error", error.message);
       return;
     }
@@ -44,3 +53,8 @@ loginForm.addEventListener("submit", async function (e) {
     fieldset.disabled = false;
   }
 });
+
+function isEmailNotVerifiedError(error) {
+  const text = error?.message?.toLowerCase() || "";
+  return text.includes("email not confirmed") || text.includes("not verified");
+}

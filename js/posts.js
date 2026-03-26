@@ -10,6 +10,7 @@ const toggleCreatePostButton = document.querySelector(
 );
 const postForm = document.querySelector("form");
 const postsContainer = document.querySelector("#postsContainer");
+const postsMessage = document.querySelector("#postsMessage");
 let currentUser = null;
 
 initFeedPage();
@@ -77,6 +78,7 @@ async function loadPosts() {
     return;
   }
 
+  displayMessage(postsMessage, "info", "");
   postsContainer.innerHTML = "";
   displayMessage("#postsContainer", "info", "Loading posts...");
 
@@ -117,16 +119,75 @@ function createPostElement(post) {
   const article = document.createElement("article");
   article.className = "rounded-lg border border-white/15 bg-black/20 p-4";
 
+  const headerRow = document.createElement("div");
+  headerRow.className = "mb-2 flex items-center justify-between gap-3";
+
   const heading = document.createElement("h3");
-  heading.className = "mb-2 text-lg font-semibold";
+  heading.className = "text-lg font-semibold";
   heading.textContent = post.title || "Untitled post";
+  headerRow.append(heading);
 
   const content = document.createElement("p");
   content.className = "whitespace-pre-wrap text-sm text-slate-200";
   content.textContent = post.content || "";
 
-  article.append(heading, content);
+  article.append(headerRow, content);
+
+  const postId = post?.id;
+  if (postId && isPostOwner(post)) {
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className =
+      "rounded-full bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600";
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+      handleDeletePost(postId, deleteButton);
+    });
+
+    headerRow.append(deleteButton);
+  }
+
   return article;
+}
+
+function isPostOwner(post) {
+  if (!currentUser?.id) {
+    return false;
+  }
+
+  const ownerId = post?.user_id ?? post?.author_id ?? post?.owner_id ?? null;
+  return ownerId === currentUser.id;
+}
+
+async function handleDeletePost(postId, button) {
+  if (!currentUser) {
+    displayMessage(postsMessage, "warning", "Please log in to manage posts.");
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Deleting...";
+  }
+
+  try {
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
+
+    if (error) {
+      throw error;
+    }
+
+    displayMessage(postsMessage, "success", "Post deleted.");
+    await loadPosts();
+  } catch (error) {
+    console.error(error);
+    displayMessage(postsMessage, "error", error.message ?? error.toString());
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Delete";
+    }
+  }
 }
 
 async function initFeedPage() {
@@ -150,7 +211,7 @@ function setCreatePostCollapsed(isCollapsed) {
 
   if (isCollapsed) {
     createPostContent.classList.add("hidden");
-    toggleCreatePostButton.textContent = "Expand";
+    toggleCreatePostButton.textContent = "Open form";
     return;
   }
 
